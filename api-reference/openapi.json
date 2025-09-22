@@ -120,7 +120,11 @@
     "components": {
         "schemas": {
             "Booking": {
-                "required": [],
+                "required": [
+                  "period".
+                  "id",
+                  "provider"
+                ],
                 "type": "object",
                 "properties": {
                     "period": {
