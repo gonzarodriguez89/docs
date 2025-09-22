@@ -116,26 +116,24 @@
         "/token": {
             "post": {
                 "description": "Generates an authentication token.",
-                "parameters": [
-                    {
-                        "name": "email",
-                        "in": "query",
-                        "description": "API User email",
+                "requestBody": {
+                    "content": {
+                      "application/json": {
                         "schema": {
-                            "type": "string",
-                            "format": "info@email.com"
+                          "type": "object",
+                          "properties": {
+                              "email": {
+                                "description": "API User email",
+                                "type": "string"
+                                },
+                              "password": {
+                                "description": "API User password",
+                                "type": "string"
+                                }
+                            }
                         }
-                    },
-                    {
-                        "name": "password",
-                        "in": "query",
-                        "description": "API User password",
-                        "schema": {
-                            "type": "string",
-                            "format": "1234567"
-                        }
-                    }
-                ],
+                      }
+                    },                                
                 "responses": {
                     "200": {
                         "description": "Successful response",
