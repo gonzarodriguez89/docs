@@ -95,7 +95,7 @@
                         "content": {
                             "application/json": {
                                 "schema": {
-                                    "$ref": "#/components/schemas/booking"
+                                    "$ref": "#/components/schemas/Booking"
                                 }
                             }
                         }
