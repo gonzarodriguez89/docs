@@ -91,16 +91,6 @@
                 ],
                 "responses": {
                     "200": {
-                        "400": {
-                            "description": "Unexpected error",
-                            "content": {
-                                "application/json": {
-                                    "schema": {
-                                        "$ref": "#/components/schemas/Error"
-                                    }
-                                }
-                            }
-                        },
                         "description": "Bookings Response",
                         "content": {
                             "application/json": {
@@ -140,7 +130,17 @@
                                 }
                             }
                         }
-                    }
+                    },
+                    "400": {
+                            "description": "Unexpected error",
+                            "content": {
+                                "application/json": {
+                                    "schema": {
+                                        "$ref": "#/components/schemas/Error"
+                                    }
+                                }
+                            }
+                        },
                 }
             }
         },
