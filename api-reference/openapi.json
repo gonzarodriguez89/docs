@@ -117,9 +117,7 @@
     "components": {
         "schemas": {
             "Booking": {
-                "required": [
-                  "items"
-                ],
+                "required": [],
                 "type": "object",
                 "properties": {
                     "itemsReceived": {
