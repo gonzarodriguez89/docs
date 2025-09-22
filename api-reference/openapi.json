@@ -16,7 +16,7 @@
     "security": [
         {
             "bearerAuth": [
-                "Authorization: Bearer {{access_tolen}}"
+                "Authorization: Bearer {{access_token}}"
             ]
         }
     ],
@@ -166,7 +166,8 @@
                             }
                         }
                     }
-                }
+                },
+                "security": {}
             }
         },
         "components": {
