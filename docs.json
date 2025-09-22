@@ -1,7 +1,7 @@
 {
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
-  "name": "Choovie's API",
+  "name": "Buildora Labs - Choovie",
   "colors": {
     "primary": "#10002B",
     "light": "#07C983",
