@@ -20,7 +20,13 @@
             ]
           },
           {
-            "group": "Endpoint examples",
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/endpoint/token"
+            ]
+          },
+          {
+            "group": "Endpoints",
             "pages": [
               "api-reference/endpoint/bookings"
             ]
