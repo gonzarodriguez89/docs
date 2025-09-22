@@ -119,7 +119,7 @@
                 "parameters": [
                     {
                         "name": "email",
-                        "in": "body",
+                        "in": "query",
                         "description": "API User email",
                         "schema": {
                             "type": "string",
@@ -128,7 +128,7 @@
                     },
                     {
                         "name": "password",
-                        "in": "body",
+                        "in": "query",
                         "description": "API User password",
                         "schema": {
                             "type": "string",
