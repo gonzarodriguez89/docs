@@ -1,8 +1,8 @@
 {
   "openapi": "3.1.0",
   "info": {
-    "title": "OpenAPI Plant Store",
-    "description": "A sample API that uses a plant store as an example to demonstrate features in the OpenAPI specification",
+    "title": "Choovie Reporting API",
+    "description": "This API is developed to fulfill Choose Entertainment PTY Ltd. Reporting requirements.",
     "license": {
       "name": "MIT"
     },
@@ -10,18 +10,20 @@
   },
   "servers": [
     {
-      "url": "http://sandbox.mintlify.com"
+      "url": "https://api.automationhub.one/api:ZHV32H3S"
     }
   ],
   "security": [
     {
-      "bearerAuth": []
+      "bearerAuth": [
+        "Authorization: Bearer {{access_tolen}}"
+      ]
     }
   ],
   "paths": {
-    "/plants": {
+    "/reporting/bookings": {
       "get": {
-        "description": "Returns all plants from the system that the user has access to",
+        "description": "Returns all bookings from the system.",
         "parameters": [
           {
             "name": "limit",
@@ -30,18 +32,66 @@
             "schema": {
               "type": "integer",
               "format": "int32"
+            },
+            {
+            "name": "offset",
+            "in": "query",
+            "description": "The number of results to skip for pagination purposes",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            },
+            {
+            "name": "from",
+            "in": "query",
+            "description": "The starting date for which we want to get bookings from",
+            "schema": {
+              "type": "string",
+              "format": "DD/MM/YYYY"
+            },
+            {
+            "name": "to",
+            "in": "query",
+            "description": "The ending date for which we want to get bookings",
+            "schema": {
+              "type": "string",
+              "format": "DD/MM/YYYY",
+            {
+            "name": "from",
+            "in": "query",
+            "description": "The starting date for which we want to get bookings from",
+            "schema": {
+              "type": "string",
+              "format": "DD/MM/YYYY"
+            }YYYY"
+            },
+            {
+            "name": "season",
+            "in": "query",
+            "description": "The season of the year for which we want to get bookings from. Can be any value from winter, spring, summer or autumn",
+            "schema": {
+              "type": "enum",
+              "format": "text"
+            },
+            {
+            "name": "year",
+            "in": "query",
+            "description": "The year for which we want to get bookings for",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
         ],
         "responses": {
           "200": {
-            "description": "Plant response",
+            "description": "Bookings Response",
             "content": {
               "application/json": {
                 "schema": {
                   "type": "array",
                   "items": {
-                    "$ref": "#/components/schemas/Plant"
+                    "$ref": "#/components/schemas/booking"
                   }
                 }
               }
