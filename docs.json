@@ -22,7 +22,7 @@
           {
             "group": "Endpoint examples",
             "pages": [
-              "api-reference/endpoint/reporting/bookings"
+              "api-reference/endpoint/bookings"
             ]
           }
         ]
