@@ -135,7 +135,7 @@
                             "format": "1234567"
                         }
                     }
-                ],          
+                ],
                 "responses": {
                     "200": {
                         "description": "Successful response",
@@ -144,10 +144,10 @@
                                 "schema": {
                                     "type": "object",
                                     "properties": {
-                                      "token": {
-                                        "type": "string",
-                                        "description": "Bearer token"
-                                      }
+                                        "token": {
+                                            "type": "string",
+                                            "description": "Bearer token"
+                                        }
                                     }
                                 }
                             }
@@ -165,7 +165,7 @@
                     }
                 }
             }
-        },
+        }
     },
     "components": {
         "schemas": {
@@ -198,8 +198,8 @@
                         "type": "integer"
                     },
                     "items": {
-                      "type": "array",
-                      "properties": {
+                        "type": "array",
+                        "properties": {
                             "period": {
                                 "description": "Combination of season and year (winter_2025)",
                                 "type": "string"
