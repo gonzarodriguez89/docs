@@ -1,202 +1,208 @@
 {
-  "openapi": "3.1.0",
-  "info": {
-    "title": "Choovie Reporting API",
-    "description": "This API is developed to fulfill Choose Entertainment PTY Ltd. Reporting requirements.",
-    "license": {
-      "name": "MIT"
+    "openapi": "3.1.0",
+    "info": {
+        "title": "Choovie Reporting API",
+        "description": "This API is developed to fulfill Choose Entertainment PTY Ltd. Reporting requirements.",
+        "license": {
+            "name": "MIT"
+        },
+        "version": "1.0.0"
     },
-    "version": "1.0.0"
-  },
-  "servers": [
-    {
-      "url": "https://api.automationhub.one/api:ZHV32H3S"
-    }
-  ],
-  "security": [
-    {
-      "bearerAuth": [
-        "Authorization: Bearer {{access_tolen}}"
-      ]
-    }
-  ],
-  "paths": {
-    "/reporting/bookings": {
-      "get": {
-        "description": "Returns all bookings from the system.",
-        "parameters": [
-          {
-            "name": "limit",
-            "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            {
-            "name": "offset",
-            "in": "query",
-            "description": "The number of results to skip for pagination purposes",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            },
-            {
-            "name": "from",
-            "in": "query",
-            "description": "The starting date for which we want to get bookings from",
-            "schema": {
-              "type": "string",
-              "format": "DD/MM/YYYY"
-            },
-            {
-            "name": "to",
-            "in": "query",
-            "description": "The ending date for which we want to get bookings",
-            "schema": {
-              "type": "string",
-              "format": "DD/MM/YYYY",
-            {
-            "name": "from",
-            "in": "query",
-            "description": "The starting date for which we want to get bookings from",
-            "schema": {
-              "type": "string",
-              "format": "DD/MM/YYYY"
-            }YYYY"
-            },
-            {
-            "name": "season",
-            "in": "query",
-            "description": "The season of the year for which we want to get bookings from. Can be any value from winter, spring, summer or autumn",
-            "schema": {
-              "type": "enum",
-              "format": "text"
-            },
-            {
-            "name": "year",
-            "in": "query",
-            "description": "The year for which we want to get bookings for",
-            "schema": {
-              "type": "integer",
-              "format": "int32"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Bookings Response",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/booking"
-                  }
-                }
-              }
-            }
-          },
-          "400": {
-            "description": "Unexpected error",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "$ref": "#/components/schemas/Error"
-                }
-              }
-            }
-          }
+    "servers": [
+        {
+            "url": "https://api.automationhub.one/api:ZHV32H3S"
         }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "Booking": {
-        "required": [],
-        "type": "object",
-        "properties": {
-          "period": {
-              "description": "Combination of season and year (winter_2025)",
-              "type": "string"
-            },
-          "id": {
-              "description": "Unique Booking internal ID from the provider",
-              "type": "string"
-            },
-          "provider": {
-              "description": "OSHC Provider Name",
-              "type": "string"
-            },
-          "service": {
-              "description": "OSHC Service Name",
-              "type": "string"
-            },
-          "cinema": {
-              "description": "Cinema Location Name",
-              "type": "string"
-            },
-          "cinema_group": {
-              "description": "Cinema Group Name",
-              "type": "string"
-            },
-          "session": {
-              "description": "Date and time of confirmed session. If the confirmed session is empty, this is getting the proposed date and time",
-              "type": "timestamp"
-            },
-          "movie": {
-              "description": "Movie allocated to that booking.",
-              "type": "string"
-            },
-          "product": {
-              "description": "Candy Bar combination configured for the OSHC Provider.",
-              "type": "string"
-            },
-          "total_children": {
-              "description": "Total kids assisting to the session. If no current numbers, this is showing the estimated numbers.",
-              "type": "integer"
-            },
-          "total_carer": {
-              "description": "Total carers assisting to the session. If no current numbers, this is showing the estimated numbers.",
-              "type": "integer"
-            },
-          "total_rev_excl_gst_est": {
-              "description": "Total revenue excluding gst. This is getting all the participants of the booking depending on whether the staff has candy bar included or not and multiplying that number for the price excluding gst at the OSHC Provider level.",
-              "type": "decimal"
-            },
-          "total_rev_incl_gst_est": {
-              "description": "Total revenue including gst. This is getting all the participants of the booking depending on whether the staff has candy bar included or not and multiplying that number for the price including gst at the OSHC Provider level.",
-              "type": "decimal"
-            },
-          "total_cost_est": {
-              "description": "Total cost. This is getting all the participants of the booking depending on whether the staff has candy bar included or not, checking whether the drink is included in the product or not, checking whether the booking is private or not and multiplying that number for the sum of public/private price of the ticket plus the popcorn/combo price per person. If there is pricing set at a cinema location level, then this is the price that is used for calculations. If not, it will get the price at the cinema group level if there is any.",
-              "type": "decimal"
-            }
-        }        
-      },
-      "Error": {
-        "required": [
-          "error",
-          "message"
-        ],
-        "type": "object",
-        "properties": {
-          "error": {
-            "type": "integer",
-            "format": "int32"
-          },
-          "message": {
-            "type": "string"
-          }
+    ],
+    "security": [
+        {
+            "bearerAuth": [
+                "Authorization: Bearer {{access_tolen}}"
+            ]
         }
-      }
+    ],
+    "paths": {
+        "/reporting/bookings": {
+            "get": {
+                "description": "Returns all bookings from the system.",
+                "parameters": [
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "The maximum number of results to return",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "offset",
+                        "in": "query",
+                        "description": "The number of results to skip for pagination purposes",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "The starting date for which we want to get bookings from",
+                        "schema": {
+                            "type": "string",
+                            "format": "DD/MM/YYYY"
+                        }
+                    },
+                    {
+                        "name": "to",
+                        "in": "query",
+                        "description": "The ending date for which we want to get bookings",
+                        "schema": {
+                            "type": "string",
+                            "format": "DD/MM/YYYY"
+                        }
+                    },
+                    {
+                        "name": "from",
+                        "in": "query",
+                        "description": "The starting date for which we want to get bookings from",
+                        "schema": {
+                            "type": "string",
+                            "format": "DD/MM/YYYY"
+                        }
+                    },
+                    {
+                        "name": "season",
+                        "in": "query",
+                        "description": "The season of the year for which we want to get bookings from. Can be any value from winter, spring, summer or autumn",
+                        "schema": {
+                            "type": "enum",
+                            "format": "text"
+                        }
+                    },
+                    {
+                        "name": "year",
+                        "in": "query",
+                        "description": "The year for which we want to get bookings for",
+                        "schema": {
+                            "type": "integer",
+                            "format": "int32"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Bookings Response",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/booking"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Unexpected error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Error"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     },
-    "securitySchemes": {
-      "bearerAuth": {
-        "type": "http",
-        "scheme": "bearer"
-      }
+    "components": {
+        "schemas": {
+            "Booking": {
+                "required": [],
+                "type": "object",
+                "properties": {
+                    "period": {
+                        "description": "Combination of season and year (winter_2025)",
+                        "type": "string"
+                    },
+                    "id": {
+                        "description": "Unique Booking internal ID from the provider",
+                        "type": "string"
+                    },
+                    "provider": {
+                        "description": "OSHC Provider Name",
+                        "type": "string"
+                    },
+                    "service": {
+                        "description": "OSHC Service Name",
+                        "type": "string"
+                    },
+                    "cinema": {
+                        "description": "Cinema Location Name",
+                        "type": "string"
+                    },
+                    "cinema_group": {
+                        "description": "Cinema Group Name",
+                        "type": "string"
+                    },
+                    "session": {
+                        "description": "Date and time of confirmed session. If the confirmed session is empty, this is getting the proposed date and time",
+                        "type": "timestamp"
+                    },
+                    "movie": {
+                        "description": "Movie allocated to that booking.",
+                        "type": "string"
+                    },
+                    "product": {
+                        "description": "Candy Bar combination configured for the OSHC Provider.",
+                        "type": "string"
+                    },
+                    "total_children": {
+                        "description": "Total kids assisting to the session. If no current numbers, this is showing the estimated numbers.",
+                        "type": "integer"
+                    },
+                    "total_carer": {
+                        "description": "Total carers assisting to the session. If no current numbers, this is showing the estimated numbers.",
+                        "type": "integer"
+                    },
+                    "total_rev_excl_gst_est": {
+                        "description": "Total revenue excluding gst. This is getting all the participants of the booking depending on whether the staff has candy bar included or not and multiplying that number for the price excluding gst at the OSHC Provider level.",
+                        "type": "decimal"
+                    },
+                    "total_rev_incl_gst_est": {
+                        "description": "Total revenue including gst. This is getting all the participants of the booking depending on whether the staff has candy bar included or not and multiplying that number for the price including gst at the OSHC Provider level.",
+                        "type": "decimal"
+                    },
+                    "total_cost_est": {
+                        "description": "Total cost. This is getting all the participants of the booking depending on whether the staff has candy bar included or not, checking whether the drink is included in the product or not, checking whether the booking is private or not and multiplying that number for the sum of public/private price of the ticket plus the popcorn/combo price per person. If there is pricing set at a cinema location level, then this is the price that is used for calculations. If not, it will get the price at the cinema group level if there is any.",
+                        "type": "decimal"
+                    }
+                }
+            },
+            "Error": {
+                "required": [
+                    "error",
+                    "message"
+                ],
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "integer",
+                        "format": "int32"
+                    },
+                    "message": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer"
+            }
+        }
     }
-  }
 }
