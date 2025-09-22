@@ -73,7 +73,7 @@
                     {
                         "name": "season",
                         "in": "query",
-                        "description": "The season of the year ("winter", "spring", "summer" or "autumn"),
+                        "description": "The season of the year: \"winter\", \"spring\", \"summer\" or \"autumn\",
                         "schema": {
                             "type": "string",
                             "format": "text"
