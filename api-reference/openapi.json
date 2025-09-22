@@ -75,7 +75,7 @@
                         "in": "query",
                         "description": "The season of the year for which we want to get bookings from. Can be any value from winter, spring, summer or autumn",
                         "schema": {
-                            "type": "enum",
+                            "type": "string",
                             "format": "text"
                         }
                     },
