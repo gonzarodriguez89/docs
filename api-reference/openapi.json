@@ -112,6 +112,30 @@
                     }
                 }
             }
+        },
+        "/token": {
+            "post": {
+                "description": "Generates an authentication token.",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "body",
+                        "description": "API User email",
+                        "schema": {
+                            "type": "string",
+                            "format": "info@email.com"
+                        }
+                    },
+                    {
+                        "name": "password",
+                        "in": "body",
+                        "description": "API User password",
+                        "schema": {
+                            "type": "string",
+                            "format": "1234567"
+                        }
+                    }
+                ],          
         }
     },
     "components": {
