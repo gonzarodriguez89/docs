@@ -21,7 +21,7 @@
         }
     ],
     "paths": {
-        "/reporting/bookings": {
+        "/bookings": {
             "get": {
                 "description": "Returns all bookings from the system.",
                 "parameters": [
