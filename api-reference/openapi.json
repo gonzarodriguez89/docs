@@ -146,8 +146,7 @@
                     },
                     "items": {
                       "type": "array",
-                      "properties":
-                        {
+                      "properties": {
                             "period": {
                                 "description": "Combination of season and year (winter_2025)",
                                 "type": "string"
