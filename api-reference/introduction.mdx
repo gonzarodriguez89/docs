@@ -1,22 +1,113 @@
 ---
 title: "Introduction"
-description: "This documentation is for reporting purposes."
+sidebarTitle: "Introduction"
 ---
 
-## Welcome
+Welcome to the **Choovie Reporting API**. This guide gives you a quick mental model for how the API works, how to authenticate, and how to try requests directly from these docs.
 
-<Card title="Choovie's Booking Endpoints" icon="file" iconType="duotone" color="#0400ff" href="https://buildoralabs.mintlify.app/api-reference/">
-  View the Choovie's API specification file
-</Card>
+## Base URL
 
-## Authentication
+```
+https://api.automationhub.one/api:ZHV32H3S
+```
 
-All API endpoints are authenticated using Bearer tokens and picked up from the specification file.
+All endpoints listed below are relative to this base URL.
+
+---
+
+## Endpoints overview
+
+### `POST /token` — Obtain a JWT
+
+- **Purpose:** Exchange your API user credentials for a short‑lived Bearer token.
+- **Auth required:** **No** (this endpoint must be unauthenticated).
+
+---
+
+### `GET /bookings` — List bookings
+
+- **Purpose:** Returns bookings with optional pagination and filters.
+- **Auth required:** **Yes** — Bearer token from `POST /token`.
+
+---
+
+## End‑to‑end: Authenticate then query
+
+### 1) Get a token
+
+```bash
+curl -X POST \
+  "https://api.automationhub.one/api:ZHV32H3S/token" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "email": "you@example.com",
+    "password": "<your-password>"
+  }'
+```
+
+**Response**
 
 ```json
-"security": [
-  {
-    "bearerAuth": []
-  }
-]
+{ "token": "<JWT>" }
 ```
+
+### 2) Call a protected endpoint
+
+```bash
+curl -X GET \
+  "https://api.automationhub.one/api:ZHV32H3S/bookings?limit=50&offset=0&from=2025-01-01&to=2025-12-31" \
+  -H "Authorization: Bearer <JWT>"
+```
+
+---
+
+## Request headers
+
+For authenticated calls:
+
+```
+Authorization: Bearer <JWT>
+Content-Type: application/json
+Accept: application/json
+```
+
+---
+
+## Pagination pattern
+
+Use `limit` and `offset` to page through results. The response includes `itemsReceived`, `itemsTotal`, `curPage`, `nextPage`, `prevPage`, and `perPage` to help you iterate.
+
+```bash
+# Example: fetch the second page
+curl "https://api.automationhub.one/api:ZHV32H3S/bookings?limit=50&offset=50" \
+  -H "Authorization: Bearer <JWT>"
+```
+
+---
+
+## Common issues & fixes
+
+- **401 Unauthorized** – Missing or expired token. Re‑request `POST /token` and include `Authorization: Bearer <JWT>`.
+- **400 Bad Request** – Invalid parameters (e.g., bad date format). Ensure dates are `DD-MM-YYYY`, integers are positive, and enums match exactly.
+- **Try It in the docs** – On the token page, send your credentials (no auth box). Copy the `token` value. On bookings, paste it into the Bearer auth field.
+
+---
+
+
+## Security model
+
+- **Bearer (JWT) auth** is required for all endpoints **except** `POST /token`.
+- Never hard‑code tokens in public clients. Rotate tokens periodically.
+
+---
+
+## Changelog & stability
+
+- **v1** (current): `POST /token`, `GET /bookings`.
+- Backward‑compatible additions may appear (new fields in responses); avoid strict response whitelisting when parsing.
+
+---
+
+## Support
+
+If you run into problems, contact [**info@buildoralabs.com**](mailto:info@buildoralabs.com) with the request ID, timestamp, and endpoint.

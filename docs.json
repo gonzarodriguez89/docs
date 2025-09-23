@@ -14,9 +14,20 @@
         "tab": "API reference",
         "groups": [
           {
-            "group": "API documentation",
+            "group": "Overview",
             "pages": [
-              "api-reference/endpoint/token",
+              "api-reference/introduction"
+            ]
+          },
+          {
+            "group": "Authentication",
+            "pages": [
+              "api-reference/endpoint/token"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
               "api-reference/endpoint/bookings"
             ]
           }
