@@ -8,7 +8,7 @@
     "tabs": [
     {
         "tab": "API reference",
-        "openapi": "https://github.com/gonzarodriguez89/docs/tree/main/public"
+        "openapi": "https://github.com/gonzarodriguez89/docs/tree/main/public/openapi.json"
     }
 ],
     "global": { "anchors": [] }
