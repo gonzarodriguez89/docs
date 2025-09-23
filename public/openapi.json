@@ -9,7 +9,6 @@
   "servers": [
     { "url": "https://api.automationhub.one/api:ZHV32H3S" }
   ],
-
   "components": {
     "securitySchemes": {
       "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
@@ -20,8 +19,8 @@
         "properties": {
           "itemsReceived": { "type": "integer" },
           "curPage": { "type": "integer" },
-          "nextPage": { "type": "integer", "nullable": true },
-          "prevPage": { "type": "integer", "nullable": true },
+          "nextPage": { "type": ["integer", "null"] },
+          "prevPage": { "type": ["integer", "null"] },
           "offset": { "type": "integer" },
           "perPage": { "type": "integer" },
           "itemsTotal": { "type": "integer" },
@@ -60,11 +59,9 @@
       }
     }
   },
-
   "security": [
-    { "bearerAuth": [] }        // global: all operations require Bearer unless overridden
+    { "bearerAuth": [] }
   ],
-
   "paths": {
     "/bookings": {
       "get": {
@@ -123,11 +120,10 @@
         }
       }
     },
-
     "/token": {
       "post": {
         "description": "Generates an authentication token.",
-        "security": [],                       // disables global bearer on this operation
+        "security": [],
         "requestBody": {
           "required": true,
           "content": {
