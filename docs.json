@@ -2,22 +2,63 @@
   "$schema": "https://mintlify.com/docs.json",
   "theme": "mint",
   "name": "Buildora Labs - Choovie",
-  "colors": { "primary": "#10002B", "light": "#07C983", "dark": "#15803D" },
+  "colors": {
+    "primary": "#10002B",
+    "light": "#07C983",
+    "dark": "#15803D"
+  },
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
-    {
+      {
         "tab": "API reference",
-        "openapi": "https://github.com/gonzarodriguez89/docs/tree/main/public/openapi.json"
+        "groups": [
+          {
+            "group": "API documentation",
+            "pages": [
+              "api-reference/endpoint/token",
+              "api-reference/endpoint/bookings"
+            ]
+          }
+        ]
+      }
+    ],
+    "global": {
+      "anchors": []
     }
-],
-    "global": { "anchors": [] }
   },
-  "logo": { "light": "/logo/light.svg", "dark": "/logo/dark.svg" },
+  "logo": {
+    "light": "/logo/light.svg",
+    "dark": "/logo/dark.svg"
+  },
   "navbar": {
-    "links": [{ "label": "Support", "href": "mailto:info@buildoralabs.com" }],
-    "primary": { "type": "button", "label": "Dashboard", "href": "https://buildoralabs.mintlify.app/" }
+    "links": [
+      {
+        "label": "Support",
+        "href": "mailto:info@buildoralabs.com"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Dashboard",
+      "href": "https://buildoralabs.mintlify.app"
+    }
   },
-  "contextual": { "options": ["copy","view","chatgpt","claude","perplexity","mcp","cursor","vscode"] },
-  "footer": { "socials": { "linkedin": "https://linkedin.com/company/buildoralabs" } }
+  "contextual": {
+    "options": [
+      "copy",
+      "view",
+      "chatgpt",
+      "claude",
+      "perplexity",
+      "mcp",
+      "cursor",
+      "vscode"
+    ]
+  },
+  "footer": {
+    "socials": {
+      "linkedin": "https://linkedin.com/company/buildoralabs"
+    }
+  }
 }
