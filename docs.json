@@ -22,7 +22,7 @@
                   },
                                     {
                     "group": "Endpoints",
-                    "openapi": "api-reference/openapi.json",
+                    "openapi": "/api-reference/openapi.json",
                     "pages": [
                       "GET /bookings"
                     ]
