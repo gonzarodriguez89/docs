@@ -12,21 +12,20 @@
         "tabs": [
             {
                 "tab": "API reference",
+                "openapi": "/openapi.json",
                 "groups": [
-                  {
-                    "group": "Authentication",
-                    "openapi": "/openapi.json",
-                    "pages": [
-                      "POST /token"
-                    ]
-                  },
-                                    {
-                    "group": "Endpoints",
-                    "openapi": "/openapi.json",
-                    "pages": [
-                      "GET /bookings"
-                    ]
-                  }
+                    {
+                        "group": "Authentication",
+                        "pages": [
+                            "POST /token"
+                        ]
+                    },
+                    {
+                        "group": "Endpoints",
+                        "pages": [
+                            "GET /bookings"
+                        ]
+                    }
                 ]
             }
         ],
