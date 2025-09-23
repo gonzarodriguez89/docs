@@ -52,7 +52,7 @@
     "primary": {
       "type": "button",
       "label": "Dashboard",
-      "href": "https://buildoralabs.mintlify.app"
+      "href": "https://buildoralabs.mintlify.app/api-reference/introduction"
     }
   },
   "contextual": {
