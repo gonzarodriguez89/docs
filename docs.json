@@ -9,6 +9,12 @@
   },
   "favicon": "/favicon.svg",
   "navigation": {
+    "redirects": [
+              {
+                "source": "/",
+                "destination": "/api-reference/introduction"
+              }
+            ],
     "tabs": [
       {
         "tab": "API reference",
