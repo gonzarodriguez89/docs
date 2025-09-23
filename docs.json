@@ -6,15 +6,11 @@
   "favicon": "/favicon.svg",
   "navigation": {
     "tabs": [
-      {
+    {
         "tab": "API reference",
-        "openapi": "/openapi.json",
-        "groups": [
-          { "group": "Authentication" },
-          { "group": "Endpoints" }
-        ]
-      }
-    ],
+        "openapi": "/openapi.json"
+    }
+],
     "global": { "anchors": [] }
   },
   "logo": { "light": "/logo/light.svg", "dark": "/logo/dark.svg" },
