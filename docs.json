@@ -15,14 +15,14 @@
                 "groups": [
                   {
                     "group": "Authentication",
-                    "openapi": "api-reference/openapi.json",
+                    "openapi": "/api-reference/openapi.json",
                     "pages": [
                       "POST /token"
                     ]
                   },
                                     {
                     "group": "Endpoints",
-                    "openapi": "api-reference/openapi.json",
+                    "openapi": "/api-reference/openapi.json",
                     "pages": [
                       "GET /bookings"
                     ]
