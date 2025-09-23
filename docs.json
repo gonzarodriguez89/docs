@@ -14,10 +14,16 @@
                 "tab": "API reference",
                 "groups": [
                   {
-                    "group": "API documentation",
+                    "group": "Authentication",
                     "openapi": "/openapi.json",
                     "pages": [
-                      "POST /token",
+                      "POST /token"
+                    ]
+                  },
+                                    {
+                    "group": "Endpoints",
+                    "openapi": "/openapi.json",
+                    "pages": [
                       "GET /bookings"
                     ]
                   }
