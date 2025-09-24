@@ -36,7 +36,9 @@
                 "service": { "type": "string" },
                 "cinema": { "type": "string" },
                 "cinema_group": { "type": "string" },
-                "session": { "type": "string", "format": "date-time", "description": "Confirmed or proposed session time" },
+                "session_timestamp": { "type": "string", "format": "date-time", "description": "Confirmed or proposed session date_time" },
+                "session_date": { "type": "string", "format": "date", "description": "Confirmed or proposed session date" },
+                "session_time": { "type": "string", "format": "time", "description": "Confirmed or proposed session time" },
                 "movie": { "type": "string" },
                 "product": { "type": "string" },
                 "total_children": { "type": "integer" },
@@ -71,12 +73,18 @@
             "name": "limit",
             "in": "query",
             "description": "The maximum number of results to return",
-            "schema": { "type": "integer", "format": "int32", "minimum": 1 }
+            "schema": { "type": "integer", "format": "int32", "minimum": 1, "minimum": 100 }
           },
           {
             "name": "offset",
             "in": "query",
             "description": "The number of results to skip for pagination",
+            "schema": { "type": "integer", "format": "int32", "minimum": 0 }
+          },
+          {
+            "name": "curr_page",
+            "in": "query",
+            "description": "The page number to return the results for",
             "schema": { "type": "integer", "format": "int32", "minimum": 0 }
           },
           {
