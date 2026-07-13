@@ -26,8 +26,16 @@ All endpoints listed below are relative to this base URL.
 
 ### `GET /bookings` — List bookings
 
-- **Purpose:** Returns bookings with optional pagination and filters.
+- **Purpose:** Returns bookings (archived seasons + current system) with optional pagination and filters.
 - **Auth required:** **Yes** — Bearer token from `POST /token`.
+
+---
+
+### `GET /bookings/historical` — Historical bookings report <sup>**Coming soon**</sup>
+
+- **Purpose:** Returns archived bookings only, as a revenue/cost report, filterable by provider name, date range, season, and year.
+- **Auth required:** **Yes** — Bearer token from `POST /token`.
+- **Status:** 🚧 Documented ahead of release — **not yet available in production**.
 
 ---
 
@@ -48,14 +56,18 @@ curl -X POST \
 **Response**
 
 ```json
-{ "token": "<JWT>" }
+{ "authToken": { "token": "<JWT>" } }
 ```
+
+The token is valid for **24 hours**.
 
 ### 2) Call a protected endpoint
 
+Use the value of `authToken.token` as the Bearer token. Note that `from`/`to` use **DD/MM/YYYY** format and must be provided together (or neither).
+
 ```bash
 curl -X GET \
-  "https://api.automationhub.one/api:ZHV32H3S/bookings?limit=50&offset=0&from=2025-01-01&to=2025-12-31" \
+  "https://api.automationhub.one/api:ZHV32H3S/bookings?limit=50&offset=0&from=01/01/2025&to=31/12/2025" \
   -H "Authorization: Bearer <JWT>"
 ```
 
@@ -88,8 +100,9 @@ curl "https://api.automationhub.one/api:ZHV32H3S/bookings?limit=50&offset=50" \
 ## Common issues & fixes
 
 - **401 Unauthorized** – Missing or expired token. Re‑request `POST /token` and include `Authorization: Bearer <JWT>`.
-- **400 Bad Request** – Invalid parameters (e.g., bad date format). Ensure dates are `DD-MM-YYYY`, integers are positive, and enums match exactly.
-- **Try It in the docs** – On the token page, send your credentials (no auth box). Copy the `token` value. On bookings, paste it into the Bearer auth field.
+- **400 Bad Request** – Invalid parameters (e.g., bad date format). Ensure dates are strict `DD/MM/YYYY` (with leading zeros), `from`/`to` are provided together (or neither), integers are positive, and enums match exactly.
+- **Error format** – Errors return `{ "code": "ERROR_CODE_...", "message": "..." }` (e.g. `ERROR_CODE_UNAUTHORIZED`, `ERROR_CODE_INPUT_ERROR`).
+- **Try It in the docs** – On the token page, send your credentials (no auth box). Copy the token from `authToken.token` in the response. On bookings, paste it into the Bearer auth field.
 
 ---
 
@@ -104,6 +117,7 @@ curl "https://api.automationhub.one/api:ZHV32H3S/bookings?limit=50&offset=50" \
 ## Changelog & stability
 
 - **v1** (current): `POST /token`, `GET /bookings`.
+- **Coming soon:** `GET /bookings/historical` — historical bookings revenue/cost report. Documented ahead of release; not yet available in production.
 - Backward‑compatible additions may appear (new fields in responses); avoid strict response whitelisting when parsing.
 
 ---
