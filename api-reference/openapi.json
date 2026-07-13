@@ -14,11 +14,35 @@
       "bearerAuth": { "type": "http", "scheme": "bearer", "bearerFormat": "JWT" }
     },
     "schemas": {
+      "BookingItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": ["string", "null"], "description": "Unique Booking internal ID from the provider" },
+          "provider": { "type": ["string", "null"], "description": "OSHC provider display name" },
+          "service": { "type": ["string", "null"], "description": "OSHC service display name" },
+          "cinema": { "type": ["string", "null"], "description": "Cinema location display name" },
+          "cinema_group": { "type": ["string", "null"], "description": "Cinema group display name" },
+          "session": { "type": ["integer", "null"], "description": "Confirmed or proposed session timestamp, in epoch milliseconds (UTC)" },
+          "session_date": { "type": ["string", "null"], "format": "date", "description": "Confirmed or proposed session date (YYYY-MM-DD, UTC)" },
+          "session_time": { "type": ["string", "null"], "description": "Confirmed or proposed session time (HH:MM, UTC)" },
+          "period": { "type": "string", "description": "Combination of season and year (e.g. winter_2025). Current-system rows use ongoing_<year>." },
+          "movie": { "type": ["string", "null"] },
+          "product": { "type": ["string", "null"], "description": "Candy bar product for the booking (e.g. \"Pop + Water\")" },
+          "total_children": { "type": "integer" },
+          "total_carers": { "type": "integer", "description": "Carer count. Only counted when the provider includes staff candy bar; otherwise 0." },
+          "total_rev_excl_gst_est": { "type": "number", "description": "Estimated revenue excluding GST" },
+          "total_rev_incl_gst_est": { "type": "number", "description": "Estimated revenue including GST" },
+          "total_cost_est": { "type": "number", "description": "Estimated cost (tickets + candy bar)" },
+          "extra_fee_per_seat": { "type": "number", "description": "Extra fee per seat resolved from the provider's extra-fee rules. Only present on current-system rows (ongoing: true)." },
+          "total_extra_fees_est": { "type": "number", "description": "extra_fee_per_seat × participants. Only present on current-system rows (ongoing: true)." },
+          "ongoing": { "type": "boolean", "description": "Present and true on rows sourced from the current bookings system (not yet archived). Absent on archived rows." }
+        }
+      },
       "Booking": {
         "type": "object",
         "properties": {
           "itemsReceived": { "type": "integer" },
-          "curPage": { "type": "integer" },
+          "curPage": { "type": ["integer", "null"] },
           "nextPage": { "type": ["integer", "null"] },
           "prevPage": { "type": ["integer", "null"] },
           "offset": { "type": "integer" },
@@ -27,36 +51,54 @@
           "pageTotal": { "type": "integer" },
           "items": {
             "type": "array",
-            "items": {
-              "type": "object",
-              "properties": {
-                "period": { "type": "string", "description": "Combination of season and year (e.g., winter_2025)" },
-                "id": { "type": "string", "description": "Unique Booking internal ID from the provider" },
-                "provider": { "type": "string" },
-                "service": { "type": "string" },
-                "cinema": { "type": "string" },
-                "cinema_group": { "type": "string" },
-                "session_timestamp": { "type": "string", "format": "date-time", "description": "Confirmed or proposed session date_time" },
-                "session_date": { "type": "string", "format": "date", "description": "Confirmed or proposed session date" },
-                "session_time": { "type": "string", "format": "time", "description": "Confirmed or proposed session time" },
-                "movie": { "type": "string" },
-                "product": { "type": "string" },
-                "total_children": { "type": "integer" },
-                "total_carer": { "type": "integer" },
-                "total_rev_excl_gst_est": { "type": "number" },
-                "total_rev_incl_gst_est": { "type": "number" },
-                "total_cost_est": { "type": "number" }
-              }
-            }
+            "items": { "$ref": "#/components/schemas/BookingItem" }
+          }
+        }
+      },
+      "HistoricalBookingItem": {
+        "type": "object",
+        "properties": {
+          "id": { "type": ["string", "null"], "description": "Unique Booking internal ID from the provider" },
+          "provider": { "type": ["string", "null"], "description": "OSHC provider display name" },
+          "service": { "type": ["string", "null"], "description": "OSHC service display name" },
+          "cinema": { "type": ["string", "null"], "description": "Cinema location display name" },
+          "cinema_group": { "type": ["string", "null"], "description": "Cinema group display name" },
+          "session": { "type": ["integer", "null"], "description": "Confirmed or proposed session timestamp, in epoch milliseconds (UTC)" },
+          "session_date": { "type": ["string", "null"], "format": "date", "description": "Confirmed or proposed session date (YYYY-MM-DD, UTC)" },
+          "session_time": { "type": ["string", "null"], "description": "Confirmed or proposed session time (HH:MM, UTC)" },
+          "period": { "type": "string", "description": "Combination of season and year (e.g. winter_2025)" },
+          "movie": { "type": ["string", "null"] },
+          "product": { "type": ["string", "null"], "description": "Candy bar product for the booking (e.g. \"Pop + Water\")" },
+          "total_children": { "type": "integer" },
+          "total_carers": { "type": "integer", "description": "Carer count. Only counted when the provider includes staff candy bar; otherwise 0." },
+          "total_rev_excl_gst_est": { "type": "number", "description": "Estimated revenue excluding GST (per-seat provider fee + extra fees, plus the provider's supplementary invoice rate for the period)" },
+          "total_rev_incl_gst_est": { "type": "number", "description": "Estimated revenue including GST (per-seat provider fee + extra fees, plus the provider's supplementary invoice rate for the period)" },
+          "total_cost_est": { "type": "number", "description": "Estimated cost (tickets + candy bar)" }
+        }
+      },
+      "HistoricalBooking": {
+        "type": "object",
+        "properties": {
+          "itemsReceived": { "type": "integer" },
+          "curPage": { "type": ["integer", "null"] },
+          "nextPage": { "type": ["integer", "null"] },
+          "prevPage": { "type": ["integer", "null"] },
+          "offset": { "type": "integer" },
+          "perPage": { "type": "integer" },
+          "itemsTotal": { "type": "integer" },
+          "pageTotal": { "type": "integer" },
+          "items": {
+            "type": "array",
+            "items": { "$ref": "#/components/schemas/HistoricalBookingItem" }
           }
         }
       },
       "Error": {
         "type": "object",
-        "required": ["error", "message"],
+        "required": ["code", "message"],
         "properties": {
-          "error": { "type": "integer", "format": "int32" },
-          "message": { "type": "string" }
+          "code": { "type": "string", "description": "Machine-readable error code (e.g. ERROR_CODE_UNAUTHORIZED, ERROR_CODE_INPUT_ERROR)" },
+          "message": { "type": "string", "description": "Human-readable error description" }
         }
       }
     }
@@ -67,13 +109,13 @@
   "paths": {
     "/bookings": {
       "get": {
-        "description": "Returns all bookings from the system.",
+        "description": "Returns all bookings from the system: archived seasons plus current-system bookings, merged and sorted by session ascending.\n\n- **Date filters** (`from` / `to`) must be provided together or not at all, in strict `DD/MM/YYYY` format.\n- **`season` / `year`** only filter archived rows; current-system rows (marked `\"ongoing\": true`, with `period` = `ongoing_<year>`) are always included.\n- Pagination: `curr_page` (1-based) takes precedence over `offset` when both are provided.",
         "parameters": [
           {
             "name": "limit",
             "in": "query",
-            "description": "The maximum number of results to return",
-            "schema": { "type": "integer", "format": "int32", "minimum": 1, "maximum": 100 }
+            "description": "The maximum number of results to return (default 100)",
+            "schema": { "type": "integer", "format": "int32", "minimum": 1, "maximum": 1000, "default": 100 }
           },
           {
             "name": "offset",
@@ -84,20 +126,95 @@
           {
             "name": "curr_page",
             "in": "query",
-            "description": "The page number to return the results for",
-            "schema": { "type": "integer", "format": "int32", "minimum": 0 }
+            "description": "The 1-based page number to return. Takes precedence over offset when both are provided.",
+            "schema": { "type": "integer", "format": "int32", "minimum": 1 }
           },
           {
             "name": "from",
             "in": "query",
-            "description": "Start date (inclusive)",
-            "schema": { "type": "string", "format": "date" }
+            "description": "Start date (inclusive), strict DD/MM/YYYY (e.g. 01/09/2025). Must be provided together with `to`.",
+            "schema": { "type": "string", "pattern": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$", "example": "01/09/2025" }
           },
           {
             "name": "to",
             "in": "query",
-            "description": "End date (inclusive)",
-            "schema": { "type": "string", "format": "date" }
+            "description": "End date (inclusive), strict DD/MM/YYYY (e.g. 30/09/2025). Must be provided together with `from`.",
+            "schema": { "type": "string", "pattern": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$", "example": "30/09/2025" }
+          },
+          {
+            "name": "season",
+            "in": "query",
+            "description": "Season of the year. Only filters archived rows; current-system rows are always included.",
+            "schema": { "type": "string", "enum": ["winter", "spring", "summer", "autumn"] }
+          },
+          {
+            "name": "year",
+            "in": "query",
+            "description": "Year to query. Only filters archived rows; current-system rows are always included.",
+            "schema": { "type": "integer", "format": "int32" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Booking" } }
+            }
+          },
+          "400": {
+            "description": "Invalid input (e.g. bad date format, or only one of from/to provided)",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+            }
+          }
+        }
+      }
+    },
+    "/bookings/historical": {
+      "get": {
+        "description": "> ⚠️ **Coming soon** — This endpoint is documented ahead of release and is **not yet available in production**. The contract below may change slightly before launch.\n\nReturns archived (historical) bookings only, as a revenue/cost report: each row includes estimated revenue (excl/incl GST, including the provider's supplementary invoice rate for the period) and estimated cost, with provider, service, cinema, and session details.\n\n- **Date filters** (`from` / `to`) must be provided together or not at all, in strict `DD/MM/YYYY` format.\n- **`provider_name`** filters by partial match against the OSHC provider display name.\n- Pagination: `curr_page` (1-based) takes precedence over `offset` when both are provided.",
+        "parameters": [
+          {
+            "name": "provider_name",
+            "in": "query",
+            "description": "Filter by OSHC provider display name (partial match)",
+            "schema": { "type": "string" }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "description": "The maximum number of results to return (default 100)",
+            "schema": { "type": "integer", "format": "int32", "minimum": 1, "maximum": 1000, "default": 100 }
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "description": "The number of results to skip for pagination",
+            "schema": { "type": "integer", "format": "int32", "minimum": 0 }
+          },
+          {
+            "name": "curr_page",
+            "in": "query",
+            "description": "The 1-based page number to return. Takes precedence over offset when both are provided.",
+            "schema": { "type": "integer", "format": "int32", "minimum": 1 }
+          },
+          {
+            "name": "from",
+            "in": "query",
+            "description": "Start date (inclusive), strict DD/MM/YYYY (e.g. 01/09/2025). Must be provided together with `to`.",
+            "schema": { "type": "string", "pattern": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$", "example": "01/09/2025" }
+          },
+          {
+            "name": "to",
+            "in": "query",
+            "description": "End date (inclusive), strict DD/MM/YYYY (e.g. 30/09/2025). Must be provided together with `from`.",
+            "schema": { "type": "string", "pattern": "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/\\d{4}$", "example": "30/09/2025" }
           },
           {
             "name": "season",
@@ -116,11 +233,17 @@
           "200": {
             "description": "Successful response",
             "content": {
-              "application/json": { "schema": { "$ref": "#/components/schemas/Booking" } }
+              "application/json": { "schema": { "$ref": "#/components/schemas/HistoricalBooking" } }
             }
           },
           "400": {
-            "description": "Unexpected error",
+            "description": "Invalid input (e.g. bad date format, or only one of from/to provided)",
+            "content": {
+              "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
+            }
+          },
+          "401": {
+            "description": "Missing, invalid, or expired token",
             "content": {
               "application/json": { "schema": { "$ref": "#/components/schemas/Error" } }
             }
@@ -130,7 +253,7 @@
     },
     "/token": {
       "post": {
-        "description": "Generates an authentication token.",
+        "description": "Generates an authentication token. The token is valid for 24 hours (86400 seconds).",
         "security": [],
         "requestBody": {
           "required": true,
@@ -155,14 +278,19 @@
                 "schema": {
                   "type": "object",
                   "properties": {
-                    "token": { "type": "string", "description": "Bearer token" }
+                    "authToken": {
+                      "type": "object",
+                      "properties": {
+                        "token": { "type": "string", "description": "Bearer token (JWT), valid for 24 hours" }
+                      }
+                    }
                   }
                 }
               }
             }
           },
-          "400": {
-            "description": "Unexpected error",
+          "403": {
+            "description": "Invalid credentials",
             "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Error" } } }
           }
         }

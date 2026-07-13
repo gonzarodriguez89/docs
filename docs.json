@@ -34,7 +34,8 @@
           {
             "group": "Endpoints",
             "pages": [
-              "api-reference/endpoint/bookings"
+              "api-reference/endpoint/bookings",
+              "api-reference/endpoint/bookings-historical"
             ]
           }
         ]
