@@ -63,9 +63,9 @@
           "service": { "type": ["string", "null"], "description": "OSHC service display name" },
           "cinema": { "type": ["string", "null"], "description": "Cinema location display name" },
           "cinema_group": { "type": ["string", "null"], "description": "Cinema group display name" },
-          "session": { "type": ["integer", "null"], "description": "Confirmed or proposed session timestamp, in epoch milliseconds (UTC)" },
-          "session_date": { "type": ["string", "null"], "format": "date", "description": "Confirmed or proposed session date (YYYY-MM-DD, UTC)" },
-          "session_time": { "type": ["string", "null"], "description": "Confirmed or proposed session time (HH:MM, UTC)" },
+          "session": { "type": ["string", "null"], "description": "Confirmed or proposed session date and time, formatted DD/MM/YYYY HH:MM. Matches what the Choovie app displays — do not apply a timezone conversion." },
+          "session_date": { "type": ["string", "null"], "description": "Confirmed or proposed session date, formatted DD/MM/YYYY" },
+          "session_time": { "type": ["string", "null"], "description": "Confirmed or proposed session time, formatted HH:MM" },
           "period": { "type": "string", "description": "Combination of season and year (e.g. winter_2025)" },
           "movie": { "type": ["string", "null"] },
           "product": { "type": ["string", "null"], "description": "Candy bar product for the booking (e.g. \"Pop + Water\")" },
@@ -178,7 +178,7 @@
     },
     "/bookings/historical": {
       "get": {
-        "description": "> ⚠️ **Coming soon** — This endpoint is documented ahead of release and is **not yet available in production**. The contract below may change slightly before launch.\n\nReturns archived (historical) bookings only, as a revenue/cost report: each row includes estimated revenue (excl/incl GST, including the provider's supplementary invoice rate for the period) and estimated cost, with provider, service, cinema, and session details.\n\n- **Date filters** (`from` / `to`) must be provided together or not at all, in strict `DD/MM/YYYY` format.\n- **`provider_name`** filters by partial match against the OSHC provider display name.\n- Pagination: `curr_page` (1-based) takes precedence over `offset` when both are provided.",
+        "description": "Returns archived (historical) bookings only, as a revenue/cost report: each row includes estimated revenue (excl/incl GST, including the provider's supplementary invoice rate for the period) and estimated cost, with provider, service, cinema, and session details.\n\n- **Date filters** (`from` / `to`) must be provided together or not at all, in strict `DD/MM/YYYY` format.\n- **`provider_name`** filters by partial match against the OSHC provider display name.\n- Session fields are returned as `DD/MM/YYYY` strings, not epoch timestamps — they match what the Choovie app displays, so do not apply a timezone conversion.\n- Only archived bookings are returned; current-system bookings never appear here, so every row belongs to a closed period.\n- Rows are sorted by session ascending.\n- Pagination: `curr_page` (1-based) takes precedence over `offset` when both are provided.",
         "parameters": [
           {
             "name": "provider_name",
