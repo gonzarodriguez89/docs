@@ -31,11 +31,11 @@ All endpoints listed below are relative to this base URL.
 
 ---
 
-### `GET /bookings/historical` — Historical bookings report <sup>**Coming soon**</sup>
+### `GET /bookings/historical` — Historical bookings report
 
 - **Purpose:** Returns archived bookings only, as a revenue/cost report, filterable by provider name, date range, season, and year.
 - **Auth required:** **Yes** — Bearer token from `POST /token`.
-- **Status:** 🚧 Documented ahead of release — **not yet available in production**.
+- **Note:** Session date and time come back as `DD/MM/YYYY` strings rather than epoch timestamps, matching what the Choovie app displays. Do not apply a timezone conversion.
 
 ---
 
@@ -116,8 +116,7 @@ curl "https://api.automationhub.one/api:ZHV32H3S/bookings?limit=50&offset=50" \
 
 ## Changelog & stability
 
-- **v1** (current): `POST /token`, `GET /bookings`.
-- **Coming soon:** `GET /bookings/historical` — historical bookings revenue/cost report. Documented ahead of release; not yet available in production.
+- **v1** (current): `POST /token`, `GET /bookings`, `GET /bookings/historical`.
 - Backward‑compatible additions may appear (new fields in responses); avoid strict response whitelisting when parsing.
 
 ---
